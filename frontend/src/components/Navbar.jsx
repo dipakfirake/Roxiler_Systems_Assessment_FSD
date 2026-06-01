@@ -31,98 +31,94 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="navbar-inner">
+      <div className="navbar-content">
         <NavLink to="/" className="navbar-brand" onClick={closeMenu}>
           <span className="navbar-brand-icon">★</span>
           Store Rating Platform
         </NavLink>
 
         <button
-          className="navbar-hamburger"
+          className="navbar-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
           {menuOpen ? '✕' : '☰'}
         </button>
 
-        <div className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-          <div className="navbar-links">
-            {user?.role === 'admin' && (
-              <>
+        <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
+          {user?.role === 'admin' && (
+            <>
+              <li>
                 <NavLink
                   to="/admin/dashboard"
-                  className={({ isActive }) =>
-                    `navbar-link ${isActive ? 'active' : ''}`
-                  }
+                  className={({ isActive }) => isActive ? 'active' : ''}
                   onClick={closeMenu}
                 >
                   Dashboard
                 </NavLink>
+              </li>
+              <li>
                 <NavLink
                   to="/admin/users"
-                  className={({ isActive }) =>
-                    `navbar-link ${isActive ? 'active' : ''}`
-                  }
+                  className={({ isActive }) => isActive ? 'active' : ''}
                   onClick={closeMenu}
                 >
                   Users
                 </NavLink>
+              </li>
+              <li>
                 <NavLink
                   to="/admin/stores"
-                  className={({ isActive }) =>
-                    `navbar-link ${isActive ? 'active' : ''}`
-                  }
+                  className={({ isActive }) => isActive ? 'active' : ''}
                   onClick={closeMenu}
                 >
                   Stores
                 </NavLink>
-              </>
-            )}
-            {user?.role === 'user' && (
+              </li>
+            </>
+          )}
+          {user?.role === 'user' && (
+            <li>
               <NavLink
                 to="/stores"
-                className={({ isActive }) =>
-                  `navbar-link ${isActive ? 'active' : ''}`
-                }
+                className={({ isActive }) => isActive ? 'active' : ''}
                 onClick={closeMenu}
               >
                 Stores
               </NavLink>
-            )}
-            {user?.role === 'store_owner' && (
+            </li>
+          )}
+          {user?.role === 'store_owner' && (
+            <li>
               <NavLink
                 to="/store-owner/dashboard"
-                className={({ isActive }) =>
-                  `navbar-link ${isActive ? 'active' : ''}`
-                }
+                className={({ isActive }) => isActive ? 'active' : ''}
                 onClick={closeMenu}
               >
                 Dashboard
               </NavLink>
-            )}
+            </li>
+          )}
+          <li>
             <NavLink
               to="/change-password"
-              className={({ isActive }) =>
-                `navbar-link ${isActive ? 'active' : ''}`
-              }
+              className={({ isActive }) => isActive ? 'active' : ''}
               onClick={closeMenu}
             >
               Change Password
             </NavLink>
-          </div>
+          </li>
+        </ul>
 
-          <div className="navbar-right">
-            <div className="navbar-user">
-              <div className="navbar-avatar">{getInitials(user?.name)}</div>
-              <div className="navbar-user-info">
-                <span className="navbar-user-name">{user?.name}</span>
-                <span className="navbar-user-role">{formatRole(user?.role)}</span>
-              </div>
-            </div>
-            <button className="navbar-logout" onClick={handleLogout}>
-              Logout
-            </button>
+        <div className="navbar-user">
+          <div className="navbar-user-info">
+            <span className="navbar-user-name">{user?.name}</span>
+            <span className="navbar-user-role">{formatRole(user?.role)}</span>
           </div>
+          <div className="navbar-avatar">{getInitials(user?.name)}</div>
+          <button className="navbar-logout" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
     </nav>

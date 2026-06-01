@@ -58,7 +58,7 @@ CREATE INDEX idx_ratings_user ON ratings(user_id);
 
 -- 1. Admin user
 INSERT INTO users (name, email, password, address, role) VALUES
-('Rajendra Vishwas Kulkarni', 'admin@storerating.com', '$2a$10$ix/b/S.9G6JtIiVlyiqruuTghx3sqkcwqft7wQBrLDnqIyLB10fZa', 'Shivajinagar, Pune, Maharashtra 411005', 'admin');
+('Admin', 'admin@storerating.com', '$2a$10$ix/b/S.9G6JtIiVlyiqruuTghx3sqkcwqft7wQBrLDnqIyLB10fZa', 'Pune, Maharashtra', 'admin');
 
 -- 2. Store owners (5)
 INSERT INTO users (name, email, password, address, role) VALUES

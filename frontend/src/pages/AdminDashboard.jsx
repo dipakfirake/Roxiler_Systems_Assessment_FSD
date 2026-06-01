@@ -43,7 +43,7 @@ export default function AdminDashboard() {
         <h1>Admin Dashboard</h1>
       </div>
 
-      <div className="grid grid-3">
+      <div className="dashboard-grid">
         <DashboardCard
           title="Total Users"
           value={stats?.totalUsers ?? 0}
