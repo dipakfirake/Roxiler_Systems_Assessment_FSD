@@ -32,7 +32,7 @@ export default function AdminUsers() {
       params.order = order;
 
       const res = await api.get('/users', { params });
-      setUsers(res.data);
+      setUsers(res.data.users || res.data || []);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load users.');
     } finally {

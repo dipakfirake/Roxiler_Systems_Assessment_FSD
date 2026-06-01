@@ -37,8 +37,8 @@ export default function StoreOwnerDashboard() {
     );
   }
 
-  const ratings = data?.ratings || [];
-  const averageRating = data?.averageRating || 0;
+  const ratings = data?.raters || data?.ratings || [];
+  const averageRating = data?.store?.average_rating ?? data?.averageRating ?? 0;
 
   return (
     <div className="container page-wrapper fade-in">
@@ -82,8 +82,8 @@ export default function StoreOwnerDashboard() {
             ) : (
               ratings.map((entry, index) => (
                 <tr key={entry.id || index}>
-                  <td>{entry.userName || entry.name || '—'}</td>
-                  <td>{entry.userEmail || entry.email || '—'}</td>
+                  <td>{entry.user_name || entry.userName || entry.name || '—'}</td>
+                  <td>{entry.user_email || entry.userEmail || entry.email || '—'}</td>
                   <td>
                     <StarRating value={entry.rating} readonly />
                   </td>

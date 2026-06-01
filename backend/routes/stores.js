@@ -11,7 +11,7 @@ router.use(authenticate);
 // If the requesting user is a normal user, also include their own submitted rating per store
 router.get('/', async (req, res) => {
     try {
-        const { name, address, sortBy, order } = req.query;
+        const { name, email, address, search, sortBy, order } = req.query;
         const userId = req.user.id;
         const userRole = req.user.role;
 
@@ -43,15 +43,23 @@ router.get('/', async (req, res) => {
             query += ' AND s.name LIKE ?';
             params.push(`%${name}%`);
         }
+        if (email) {
+            query += ' AND s.email LIKE ?';
+            params.push(`%${email}%`);
+        }
         if (address) {
             query += ' AND s.address LIKE ?';
             params.push(`%${address}%`);
+        }
+        if (search) {
+            query += ' AND (s.name LIKE ? OR s.address LIKE ?)';
+            params.push(`%${search}%`, `%${search}%`);
         }
 
         query += ' GROUP BY s.id';
 
         // Sorting
-        const allowedSortColumns = ['name', 'average_rating', 'created_at'];
+        const allowedSortColumns = ['name', 'email', 'average_rating', 'created_at'];
         if (sortBy && allowedSortColumns.includes(sortBy)) {
             const sortOrder = order && order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
             if (sortBy === 'average_rating') {

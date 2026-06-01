@@ -5,7 +5,7 @@ import api from '../utils/api';
 const validators = {
   name: (val) => {
     if (!val) return 'Name is required.';
-    if (val.length < 20) return 'Name must be at least 20 characters.';
+    if (val.length < 2) return 'Name must be at least 2 characters.';
     if (val.length > 60) return 'Name must not exceed 60 characters.';
     return '';
   },
@@ -125,7 +125,7 @@ export default function AdminAddUser() {
               onBlur={handleBlur}
             />
             {errors.name && <div className="form-error">{errors.name}</div>}
-            <div className="form-hint">Between 20 and 60 characters</div>
+            <div className="form-hint">Between 2 and 60 characters</div>
           </div>
 
           <div className="form-row">

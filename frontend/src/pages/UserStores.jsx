@@ -24,7 +24,12 @@ export default function UserStores() {
       if (search) params.search = search;
 
       const res = await api.get('/stores', { params });
-      setStores(res.data);
+      const list = res.data.stores || res.data || [];
+      setStores(list.map(s => ({
+        ...s,
+        averageRating: s.average_rating ?? s.averageRating ?? 0,
+        userRating: s.my_rating ?? s.userRating ?? null,
+      })));
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load stores.');
     } finally {
@@ -130,8 +135,8 @@ export default function UserStores() {
                 </th>
                 <th>Address</th>
                 <th
-                  className={getSortClass('rating')}
-                  onClick={() => handleSort('rating')}
+                  className={getSortClass('average_rating')}
+                  onClick={() => handleSort('average_rating')}
                 >
                   Overall Rating
                 </th>

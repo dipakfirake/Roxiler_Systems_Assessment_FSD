@@ -33,7 +33,11 @@ export default function AdminStores() {
       if (searchParts.length > 0) params.search = searchParts.join(' ');
 
       const res = await api.get('/stores', { params });
-      setStores(res.data);
+      const list = res.data.stores || res.data || [];
+      setStores(list.map(s => ({
+        ...s,
+        averageRating: s.average_rating ?? s.averageRating ?? 0,
+      })));
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load stores.');
     } finally {
@@ -122,7 +126,7 @@ export default function AdminStores() {
                   Email
                 </th>
                 <th>Address</th>
-                <th className={getSortClass('rating')} onClick={() => handleSort('rating')}>
+                <th className={getSortClass('average_rating')} onClick={() => handleSort('average_rating')}>
                   Rating
                 </th>
               </tr>

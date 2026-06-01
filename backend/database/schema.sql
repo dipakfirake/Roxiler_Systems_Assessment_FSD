@@ -14,7 +14,7 @@ CREATE TABLE users (
     address VARCHAR(400),
     role ENUM('admin', 'user', 'store_owner') NOT NULL DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT chk_name_len CHECK (CHAR_LENGTH(name) >= 20 AND CHAR_LENGTH(name) <= 60),
+    CONSTRAINT chk_name_len CHECK (CHAR_LENGTH(name) >= 2 AND CHAR_LENGTH(name) <= 60),
     CONSTRAINT chk_address_len CHECK (address IS NULL OR CHAR_LENGTH(address) <= 400)
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE stores (
     owner_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_store_owner FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE SET NULL,
-    CONSTRAINT chk_store_name_len CHECK (CHAR_LENGTH(name) >= 20 AND CHAR_LENGTH(name) <= 60)
+    CONSTRAINT chk_store_name_len CHECK (CHAR_LENGTH(name) >= 2 AND CHAR_LENGTH(name) <= 60)
 );
 
 -- Ratings table

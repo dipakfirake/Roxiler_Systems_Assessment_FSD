@@ -15,7 +15,12 @@ export default function UserDetails() {
     const fetchUser = async () => {
       try {
         const res = await api.get(`/users/${id}`);
-        setUser(res.data);
+        const userData = res.data.user || res.data;
+        // If store_owner, map store average_rating for display
+        if (userData.role === 'store_owner' && userData.stores && userData.stores.length > 0) {
+          userData.storeRating = userData.stores[0].average_rating;
+        }
+        setUser(userData);
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to load user details.');
       } finally {

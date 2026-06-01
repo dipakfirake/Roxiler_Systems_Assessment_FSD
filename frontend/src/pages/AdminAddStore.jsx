@@ -22,7 +22,7 @@ export default function AdminAddStore() {
     const fetchOwners = async () => {
       try {
         const res = await api.get('/users', { params: { role: 'store_owner' } });
-        setOwners(res.data);
+        setOwners(res.data.users || res.data || []);
       } catch (err) {
         setApiError('Failed to load store owners.');
       } finally {
@@ -68,7 +68,12 @@ export default function AdminAddStore() {
 
     setLoading(true);
     try {
-      await api.post('/stores', form);
+      await api.post('/stores', {
+        name: form.name,
+        email: form.email,
+        address: form.address,
+        owner_id: form.ownerId || null,
+      });
       setSuccess('Store created successfully!');
       setTimeout(() => navigate('/admin/stores'), 1500);
     } catch (err) {
